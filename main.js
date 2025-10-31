@@ -34,14 +34,14 @@ function gameLoop(){
     enemies.forEach((e,j)=>{
       let dx=e.x-p.x, dy=e.y-p.y;
       if(Math.sqrt(dx*dx+dy*dy)<e.size/2+p.size){
-        e.hp-=10;
+        e.hp -= p.damage;
         if(e.hp<=0){
           enemies.splice(j,1);
           money+=10; score+=1;
           if(score>highscore) highscore=score;
           updateHUD();
         }
-        projectiles.splice(i,1);
+        if(!p.melee) projectiles.splice(i,1);
       }
     });
   });
@@ -68,6 +68,7 @@ function gameLoop(){
     }
   } else nextWaveTimer=0;
 
+  updateAmmoHUD();
   requestAnimationFrame(gameLoop);
 }
 
